@@ -14,7 +14,7 @@ rail2_height = rail1_height;
 rail2_depth = rail1_depth;
 rail2_pos = 55;
 
-fix_hole_dia = 8;
+fix_hole_dia = 8.5;
 drill_hole_dia = 12;
 
 drill_hole1_pos = 15;
@@ -22,6 +22,7 @@ drill_hole1_pos = 15;
 drill_hole2_pos = 45;
 
 fix_hole_pos = 105;
+
 
 difference() {
     
@@ -32,18 +33,19 @@ difference() {
                    (depth/2) - (rail1_depth/2),
                    -1 * rail1_height]) {
             translate([rail1_pos,0,0]) cube ([rail1_length, rail1_depth, rail1_height]);
+
             translate([rail2_pos,0,0]) cube ([rail2_length, rail2_depth, rail2_height]);
         }
         
         translate([0,(depth/2) - (rail1_depth/2),0]) {
             translate ([28,0,0]) rotate([0,90,90]) triangle(rail1_height,6,rail1_depth);
             translate ([58,0,0]) rotate([0,90,90]) triangle(rail1_height,6,rail1_depth);
-
         }
         
         translate([0,(depth/2) + (rail1_depth/2),0]) {
             translate ([32,0,0]) rotate([0,90,270]) triangle(rail1_height,6,rail1_depth);
             translate ([92,0,0]) rotate([0,90,270]) triangle(rail1_height,6,rail1_depth);
+            
 
         }
     }
@@ -53,10 +55,19 @@ difference() {
     translate([0, 
            (depth/2),
            -1]) {
-        translate([drill_hole1_pos,0,0]) cylinder(d=drill_hole_dia, h=height+2);
-        translate([drill_hole2_pos,0,0]) cylinder(d=drill_hole_dia, h=height+2);
+        translate([drill_hole1_pos,0,0]) {
+            cylinder(d=drill_hole_dia, h=height+2);
+            translate([-3.8,4.5,0]) cube([7.5, 4, 30]);
+            rotate([0,90,90]) translate([-1*(height/2),0,0]) cylinder(d=4.5, h=20);
+
+        }
+        translate([drill_hole2_pos,0,0]) {
+                cylinder(d=drill_hole_dia, h=height+2);
+                translate([-3.8,4.5,0]) cube([7.5, 4, 30]);
+                rotate([0,90,90]) translate([-1*(height/2),0,0]) cylinder(d=4.5, h=20);
+            }
         translate([fix_hole_pos,0,0]) cylinder(d=fix_hole_dia, h=height+2);
-             
+        
     }
 }
 
